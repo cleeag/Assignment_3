@@ -83,16 +83,11 @@ int Tree<T>::getDepth(const T &data) const {
 //hint: you may make use of the overloaded version of this function that takes no parameter
 template<typename T>
 int Tree<T>::getDescendantCount(const T &data) const {
-    if (isEmpty()) return -1;
-    else {
-        int count = root->data == data ? 1 : 0;
-        for (int i = 0; i < root->childCount; ++i) {
-            int res = root->children[i].getDescendantCount(data);
-            if (res != -1) count += res;
-        }
-        if (count == 0) return -1;
-        else return count;
-    }
+    const Tree<T>* tree = find(data);
+    if (isEmpty() or tree == nullptr)
+        return -1;
+    else
+        return tree->getDescendantCount();
 }
 
 //return the descendant count of the root node in this whole tree
@@ -101,9 +96,12 @@ template<typename T>
 int Tree<T>::getDescendantCount() const {
     if (isEmpty()) return -1;
     else {
-        int count = 1;
-        for (int i = 0; i < root->childCount; ++i) count += root->children[i].getDescendantCount();
-        return count;
+        int count = 0;
+        for (int i = 0; i < root->childCount; ++i){
+            int res = root->children[i].getDescendantCount();
+            if (res != -1) count += res;
+        }
+        return count + root->childCount;
     }
 }
 
