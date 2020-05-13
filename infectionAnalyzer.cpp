@@ -152,11 +152,14 @@ const vector<pair<string, int>> &InfectionAnalyzer::getInfectionPowerVector() {
         }
     }
     sort(infectionPowerVector.begin(), infectionPowerVector.end(), [](auto &left, auto &right) {
-        return left.first > right.first;
+        if (left.second == right.second)
+            return left.first < right.first;
+        else
+            return left.second > right.second;
     });
-    sort(infectionPowerVector.begin(), infectionPowerVector.end(), [](auto &left, auto &right) {
-        return left.second > right.second;
-    });
+//    sort(infectionPowerVector.begin(), infectionPowerVector.end(), [](auto &left, auto &right) {
+//        return left.second > right.second;
+//    });
 
     return infectionPowerVector;
 }
