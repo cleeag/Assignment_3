@@ -22,6 +22,7 @@ Tree<T>::~Tree() {
 
 template<typename T>
 const Tree<T> &Tree<T>::operator=(const Tree &another) {
+    cout << "calling =" << endl;
     if (this != &another) {
         if (root != nullptr) delete root;
         root = new Node<T>(*another.root);
@@ -144,6 +145,7 @@ bool Tree<T>::addChild(const T &parentData, const T &childData) {
     }
     new_root->children[parent_tree->root->childCount] = child_tree;
 
+    delete child_tree;
     delete parent_tree->root;
     parent_tree->root = new_root;
     return true;

@@ -33,13 +33,11 @@ bool InfectionAnalyzer::loadInfectionFile(const string filename) {
             if (x == ' ') {
                 parent = word;
                 word = "";
-            } else if (isalnum(x)) {
+            } else if (isalnum(x))
                 word += x;
-            }
         }
         child = word;
         relations.push_back(make_pair(parent, child));
-//        cout << parent << " " << child << endl;
     }
 
     vector<pair<string, string>>::iterator pair_it;
@@ -49,7 +47,6 @@ bool InfectionAnalyzer::loadInfectionFile(const string filename) {
         Tree<string> *parent_tree = nullptr;
         Tree<string> *child_tree = nullptr;
         for (it = trees.begin(); it < trees.end(); ++it) {
-//            (*it)->print(cout);
             if (parent_tree == nullptr) parent_tree = (*it)->find(parent);
         }
 
@@ -62,16 +59,14 @@ bool InfectionAnalyzer::loadInfectionFile(const string filename) {
                 it_child++;
         }
 
-//        cout << parent << " " << child <<endl;
-//        cout<< parent_tree<<" " << child_tree << endl;
         if (parent_tree == nullptr and child_tree == nullptr) {
             Tree<string> *tree = new Tree<string>;
             tree->addRoot(parent);
             tree->addChild(parent, child);
             trees.push_back(tree);
-        } else if (parent_tree!= nullptr and child_tree == nullptr) {
+        } else if (parent_tree != nullptr and child_tree == nullptr) {
             parent_tree->addChild(parent, child);
-        } else if (parent_tree == nullptr and child_tree != nullptr){
+        } else if (parent_tree == nullptr and child_tree != nullptr) {
             child_tree->addRoot(parent);
         } else {
             parent_tree->addChild(parent, child);
@@ -89,9 +84,8 @@ bool InfectionAnalyzer::loadInfectionFile(const string filename) {
 //return false otherwise
 bool InfectionAnalyzer::isInfected(const string name) const {
     vector<Tree<string> *>::const_iterator it;
-    for (it = trees.begin(); it < trees.end(); ++it) {
+    for (it = trees.begin(); it < trees.end(); ++it)
         if ((*it)->find(name) != nullptr) return true;
-    }
     return false;
 }
 
@@ -157,9 +151,5 @@ const vector<pair<string, int>> &InfectionAnalyzer::getInfectionPowerVector() {
         else
             return left.second > right.second;
     });
-//    sort(infectionPowerVector.begin(), infectionPowerVector.end(), [](auto &left, auto &right) {
-//        return left.second > right.second;
-//    });
-
     return infectionPowerVector;
 }
