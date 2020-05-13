@@ -28,16 +28,6 @@ vector
 queue
 -
 
-/Users/chin/CLionProjects/Assignment_3/main.cpp
-iostream
--
-string
--
-tree.h
-/Users/chin/CLionProjects/Assignment_3/tree.h
-infectionAnalyzer.h
-/Users/chin/CLionProjects/Assignment_3/infectionAnalyzer.h
-
 /Users/chin/CLionProjects/Assignment_3/node.h
 
 /Users/chin/CLionProjects/Assignment_3/tree.h

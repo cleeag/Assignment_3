@@ -65,11 +65,12 @@ int main()
     tree.addChild("C","C3");
     cout << endl << tree << endl;
     cout << endl << tree2 << endl;
-    return 0;
+
     cout << "===================================================" << endl;
     cout << "Testing infectionAnalyzer1.loadInfectionFile..." << endl;
     InfectionAnalyzer infectionAnalyzer1;
     bool result = infectionAnalyzer1.loadInfectionFile("infections1.txt");
+//    return 0;
     if (!result)
     {
         cout << "For Windows Eclipse 4.6.2, put the txt files under the same folder as your source files." << endl;

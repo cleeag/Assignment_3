@@ -16,13 +16,13 @@ Tree<T>::Tree(const Tree &another) {
 }
 
 template<typename T>
-Tree<T>::~Tree(){
+Tree<T>::~Tree() {
     delete root;
 }
 
 template<typename T>
-const Tree<T>& Tree<T>::operator=(const Tree &another) {
-    if (this != &another){
+const Tree<T> &Tree<T>::operator=(const Tree &another) {
+    if (this != &another) {
         if (root != nullptr) delete root;
         root = new Node<T>(*another.root);
     }
@@ -35,9 +35,14 @@ const Tree<T>& Tree<T>::operator=(const Tree &another) {
 template<typename T>
 Tree<T> *Tree<T>::find(const T &data) {
     if (isEmpty()) return nullptr;
-    if (root->data == data) return this;
+//    cout << "root data: "<< root->data << endl;
+//    cout << "target data: "<<data << endl;
+//    cout << root->data.compare(data) << endl;
+    if (root->data.compare(data) == 0) {
+//        cout << data << " got it " << this << endl;
+        return this;
+    }
 
-//    cout << "in 1 " << root->data<<root->childCount << endl;
     for (int i = 0; i < root->childCount; ++i) {
         Tree<T> *target_tree = root->children[i].find(data);
         if (target_tree != nullptr) return target_tree;
@@ -47,12 +52,11 @@ Tree<T> *Tree<T>::find(const T &data) {
 
 template<typename T>
 const Tree<T> *Tree<T>::find(const T &data) const {
-//    cout << "in 2" << endl;
     if (isEmpty()) return nullptr;
     if (root->data == data) return this;
 
     for (int i = 0; i < root->childCount; ++i) {
-        Tree<T> *target_tree = root->children[i].find(data);
+        const Tree<T> *target_tree = root->children[i].find(data);
         if (target_tree != nullptr) return target_tree;
     }
     return nullptr;
@@ -83,7 +87,7 @@ int Tree<T>::getDepth(const T &data) const {
 //hint: you may make use of the overloaded version of this function that takes no parameter
 template<typename T>
 int Tree<T>::getDescendantCount(const T &data) const {
-    const Tree<T>* tree = find(data);
+    const Tree<T> *tree = find(data);
     if (isEmpty() or tree == nullptr)
         return -1;
     else
@@ -97,7 +101,7 @@ int Tree<T>::getDescendantCount() const {
     if (isEmpty()) return -1;
     else {
         int count = 0;
-        for (int i = 0; i < root->childCount; ++i){
+        for (int i = 0; i < root->childCount; ++i) {
             int res = root->children[i].getDescendantCount();
             if (res != -1) count += res;
         }
@@ -111,16 +115,15 @@ int Tree<T>::getDescendantCount() const {
 //that means, you will create a new root node with the specified data; it also has exactly one child which is the old root
 //note: if the specified data already exists in the tree, do nothing and return false
 template<typename T>
-bool Tree<T>::addRoot(const T& data){
+bool Tree<T>::addRoot(const T &data) {
     if (find(data) != nullptr) return false;
-    if (root != nullptr){
-        Node<T>* new_root = new Node<T>(data, 1);
+    if (root != nullptr) {
+        Node<T> *new_root = new Node<T>(data, 1);
         Tree<T> new_tree = Tree<T>();
         new_tree.root = this->root;
         new_root->children[0] = new_tree;
         root = new_root;
-    }
-    else root = new Node<T>(data);
+    } else root = new Node<T>(data);
     return true;
 }
 
@@ -129,13 +132,13 @@ bool Tree<T>::addRoot(const T& data){
 //you should add the child to the parent node's children array so that the children[0] is the first child ever added, children[1] is the second one, and so on
 //this is to make sure your output is always the same as ours
 template<typename T>
-bool Tree<T>::addChild(const T& parentData, const T& childData){
-    Tree<T>* parent_tree = find(parentData);
+bool Tree<T>::addChild(const T &parentData, const T &childData) {
+    Tree<T> *parent_tree = find(parentData);
     if (parent_tree == nullptr or find(childData) != nullptr) return false;
     Tree<T> child_tree{};
     child_tree.root = new Node<T>(childData);
 
-    Node<T>* new_root = new Node<T>(parent_tree->root->data, parent_tree->root->childCount + 1);
+    Node<T> *new_root = new Node<T>(parent_tree->root->data, parent_tree->root->childCount + 1);
     for (int i = 0; i < parent_tree->root->childCount; ++i) {
         new_root->children[i] = parent_tree->root->children[i];
     }
